@@ -1,4 +1,5 @@
-const backend_root_url = 'http://localhost:3001';
+//const backend_root_url = 'http://localhost:3001';
+const backend_root_url = 'https://todo-backend-7e6m.onrender.com'; //task6
 import { todo } from './class/Todo.js'; //task4
 const todoList = new todo(backend_root_url); //task4
 const list = document.getElementById('todolist');
