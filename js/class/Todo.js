@@ -18,19 +18,19 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _todo_instances, _todo_backend_url, _todo_readJson, _todo_addToAray, _todo_removeFromArray;
+var _Todo_instances, _Todo_backend_url, _Todo_readJson, _Todo_addToAray, _Todo_removeFromArray;
 import { Task } from "./Task.js";
-class todo {
+class Todo {
     constructor(backend_url) {
-        _todo_instances.add(this);
+        _Todo_instances.add(this);
         this.tasks = [];
-        _todo_backend_url.set(this, '');
+        _Todo_backend_url.set(this, '');
         this.getTasks = () => __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
-                fetch(__classPrivateFieldGet(this, _todo_backend_url, "f"))
+                fetch(__classPrivateFieldGet(this, _Todo_backend_url, "f"))
                     .then(response => response.json())
                     .then((response) => {
-                    __classPrivateFieldGet(this, _todo_instances, "m", _todo_readJson).call(this, response);
+                    __classPrivateFieldGet(this, _Todo_instances, "m", _Todo_readJson).call(this, response);
                     resolve(this.tasks);
                 }, (error) => {
                     reject(error);
@@ -40,7 +40,7 @@ class todo {
         this.addTask = (text) => __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 const json = JSON.stringify({ description: text });
-                fetch(__classPrivateFieldGet(this, _todo_backend_url, "f") + '/new', {
+                fetch(__classPrivateFieldGet(this, _Todo_backend_url, "f") + '/new', {
                     method: 'post',
                     headers: {
                         'Content-Type': 'application/json'
@@ -49,7 +49,7 @@ class todo {
                 })
                     .then(response => response.json())
                     .then(response => {
-                    resolve(__classPrivateFieldGet(this, _todo_instances, "m", _todo_addToAray).call(this, response.id, text));
+                    resolve(__classPrivateFieldGet(this, _Todo_instances, "m", _Todo_addToAray).call(this, response.id, text));
                 }), (error) => {
                     reject(error);
                 };
@@ -57,32 +57,32 @@ class todo {
         });
         this.removeTask = (id) => {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
-                fetch(__classPrivateFieldGet(this, _todo_backend_url, "f") + '/delete/' + id, {
+                fetch(__classPrivateFieldGet(this, _Todo_backend_url, "f") + '/delete/' + id, {
                     method: 'delete'
                 })
                     .then(response => response.json())
                     .then(response => {
-                    __classPrivateFieldGet(this, _todo_instances, "m", _todo_removeFromArray).call(this, id);
+                    __classPrivateFieldGet(this, _Todo_instances, "m", _Todo_removeFromArray).call(this, id);
                     resolve(response.id);
                 }, (error) => {
                     reject(error);
                 });
             }));
         };
-        __classPrivateFieldSet(this, _todo_backend_url, backend_url, "f");
+        __classPrivateFieldSet(this, _Todo_backend_url, backend_url, "f");
     }
 }
-_todo_backend_url = new WeakMap(), _todo_instances = new WeakSet(), _todo_readJson = function _todo_readJson(taskAsJson) {
+_Todo_backend_url = new WeakMap(), _Todo_instances = new WeakSet(), _Todo_readJson = function _Todo_readJson(taskAsJson) {
     taskAsJson.forEach((node) => {
         const task = new Task(node.id, node.description);
         this.tasks.push(task);
     });
-}, _todo_addToAray = function _todo_addToAray(id, text) {
+}, _Todo_addToAray = function _Todo_addToAray(id, text) {
     const task = new Task(id, text);
     this.tasks.push(task);
     return task;
-}, _todo_removeFromArray = function _todo_removeFromArray(id) {
+}, _Todo_removeFromArray = function _Todo_removeFromArray(id) {
     const arrayWithoutRemoved = this.tasks.filter(task => task.id !== id);
     this.tasks = arrayWithoutRemoved;
 };
-export { todo };
+export { Todo };

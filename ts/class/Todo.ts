@@ -1,6 +1,6 @@
 import { Task } from "./Task.js";
 
-class todo {
+class Todo {
     tasks: Array<Task> = []
     #backend_url = ''
     constructor(backend_url: string){
@@ -68,4 +68,4 @@ class todo {
 }
 
 
-export{ todo }
+export{ Todo }
